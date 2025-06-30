@@ -1,22 +1,63 @@
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        
-        <link rel="stylesheet" href="css/styles.css">
-        <script src="js/modernizr-2.8.3.min.js"></script>
-    </head>
-    <body>
-        <p>Hello world! This is HTML5 Boilerplate.</p>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beth Holder | Creative Writing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <nav id="side-menu">
+      <h2>Writings</h2>
+      <ul id="reading-list"></ul>
+    </nav>
+  </header>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>
-        <script src="js/script.js"></script>
-    </body>
+  <main>
+    <section class="intro">
+      <h1>Beth Holder</h1>
+      <p>Creative writer of poetic fiction, fragments, and moments. This site is a growing archive of my written works.</p>
+    </section>
+
+    <section class="readings">
+      <h2>Reading Now</h2>
+      <ul id="main-reading-list"></ul>
+    </section>
+  </main>
+
+  <script>
+    async function loadReadings() {
+      const list = document.getElementById('reading-list');
+      const mainList = document.getElementById('main-reading-list');
+
+      try {
+        const res = await fetch('readings/');
+        const text = await res.text();
+        const links = [...text.matchAll(/href="([\d.]+\.html)"/g)].map(m => m[1]).sort((a, b) => new Date(b.replace(/\.html$/, '').split('.').reverse().join('-')) - new Date(a.replace(/\.html$/, '').split('.').reverse().join('-')));
+
+        links.forEach(link => {
+          const title = link.replace('.html', '');
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = `readings/${link}`;
+          a.textContent = title;
+          li.appendChild(a);
+          list.appendChild(li);
+          mainList.appendChild(li.cloneNode(true));
+        });
+      } catch (err) {
+        console.error('Failed to load readings:', err);
+      }
+    }
+
+    function toggleMenu() {
+      document.getElementById('side-menu').classList.toggle('open');
+    }
+
+    loadReadings();
+  </script>
+</body>
 </html>
