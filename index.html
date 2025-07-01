@@ -5,9 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Beth Holder | Creative Writing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="overlay" onclick="closeMenu()"></div>
   <header>
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
     <nav id="side-menu">
@@ -17,6 +19,10 @@
   </header>
 
   <main>
+    <section class="banner">
+      <img src="banner.jpg" alt="Beth Holder Banner"/>
+    </section>
+
     <section class="intro">
       <h1>Beth Holder</h1>
       <p>Creative writer of poetic fiction, fragments, and moments. This site is a growing archive of my written works.</p>
@@ -44,6 +50,7 @@
           const a = document.createElement('a');
           a.href = `readings/${link}`;
           a.textContent = title;
+          a.onclick = closeMenu;
           li.appendChild(a);
           list.appendChild(li);
           mainList.appendChild(li.cloneNode(true));
@@ -55,6 +62,12 @@
 
     function toggleMenu() {
       document.getElementById('side-menu').classList.toggle('open');
+      document.querySelector('.overlay').classList.toggle('show');
+    }
+
+    function closeMenu() {
+      document.getElementById('side-menu').classList.remove('open');
+      document.querySelector('.overlay').classList.remove('show');
     }
 
     loadReadings();
