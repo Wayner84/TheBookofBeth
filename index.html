@@ -183,51 +183,14 @@
 						<header class="style1">
 							<h2>Any critisism welcome!</h2>
 							<p>
-								If you'd like to comment on my work please fill the form out below!<br />
+								If you'd like to comment on my work please click the link below! If you could include the name of the piece you are commenting on in the subject, that'd be amazing!<br />
 							</p>
 						</header>
 						<section style="justify-content: center;">
-						<div class="wrapper" style="width: 100%;">
-							<div class="col-6 col-12-medium">
-								<!-- Contact Form -->
-								<section>
-									<form id="contact-form" method="POST" action="https://formsubmit.co/el/libato">
-										<input type="hidden" name="_captcha" value="false">
-										<input type="hidden" name="message" id="combined-message" />
-										<div class="row gtr-50">
-											<div class="col-6 col-12-small">
-												<input type="text" name="name" placeholder="Name" required>
-											</div>
-											<div class="col-6 col-12-small">
-												<input type="email" name="email" placeholder="Email" required>
-											</div>
-											<div class="col-12">
-												<input type="text" id="piece" placeholder="Piece of Writing" required>
-											</div>
-											<div class="col-12">
-												<textarea id="user-message" placeholder="Message" rows="4" required></textarea>
-											</div>
-											<div class="col-12">
-												<ul class="actions">
-													<li><input type="submit" class="style1" value="Send" /></li>
-													<li><input type="reset" class="style2" value="Reset" /></li>
-												</ul>
-											</div>
-										</div>
-									</form>
-								</section>
-								<script>
-									document.getElementById("contact-form").addEventListener("submit", function (e) {
-										const piece = document.getElementById("piece").value.trim();
-										const message = document.getElementById("user-message").value.trim();
-										const combined = `Piece of Writing: ${piece}\n\n${message}`;
-										document.getElementById("combined-message").value = combined;
-										document.getElementById("user-message").disabled = true;
-									});
-								</script>
-							</div>
+						<div style="text-align: center; font-family: 'Source Sans Pro', sans-serif; font-size: 3em; font-style: italic;">
+						  <a href="https://formsubmit.co/el/libato" target="_blank">Send me a message here!</a>
 						</div>
-					</section>
+					
 
 								<!-- Contact -->
 									<!--<section class="feature-list small">
@@ -270,18 +233,20 @@
 											</div>
 										</div>
 									</section>-->
-
-							</div>
-						</div>
+				</section>
+				<section>
+					<div>
+						<div>
 						<div id="copyright">
 							<ul>
 								<li>&copy; The Book of Beth EST 1999</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
 						</div>
+						</div>
 					</div>
 				</section>
 
-		</div>
+		
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
