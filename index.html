@@ -154,9 +154,9 @@
 							</div>
 							<div class="col-4 col-12-medium">
 								<section class="highlight">
-									<a href="#" class="image featured"><img src="images/bojo.jpg" alt="" /></a>
-									<h3><a href="#">BOJO</a></h3>
-									<p>I got my cat during the 2021 lockdown; the perfect companion for long days stuck at home. He's been a source of chaos, comfort, and constant entertainment ever since, and of course named after Boris Johnson.</p>
+									<a href="#" class="image featured"><img src="images/whyido.jpg" alt="" /></a>
+									<h3><a href="#">WHY I'M DOING THIS</a></h3>
+									<p>I started writing just for fun back in secondary school, but over time it grew into something more. Now, I’m working toward a degree in Creative Writing and English Literature with the goal of becoming an English teacher. Turning a passion into a path.</p>
 									<ul class="actions">
 										<li><a href="#" class="button style1">Click to read more</a></li>
 									</ul>
@@ -164,9 +164,9 @@
 							</div>
 							<div class="col-4 col-12-medium">
 								<section class="highlight">
-									<a href="#" class="image featured"><img src="images/whyido.jpg" alt="" /></a>
-									<h3><a href="#">WHY I'M DOING THIS</a></h3>
-									<p>I started writing just for fun back in secondary school, but over time it grew into something more. Now, I’m working toward a degree in Creative Writing and English Literature with the goal of becoming an English teacher. Turning a passion into a path.</p>
+									<a href="#" class="image featured"><img src="images/bojo.jpg" alt="" /></a>
+									<h3><a href="#">BOJO</a></h3>
+									<p>I got my cat during the 2021 lockdown; the perfect companion for long days stuck at home. He's been a source of chaos, comfort, and constant entertainment ever since, and of course named after Boris Johnson.</p>
 									<ul class="actions">
 										<li><a href="#" class="button style1">Click to read more</a></li>
 									</ul>
@@ -186,56 +186,48 @@
 								If you'd like to comment on my work please fill the form out below!<br />
 							</p>
 						</header>
-						<div class="row">
+						<section style="justify-content: center;">
+						<div class="wrapper" style="width: 100%;">
 							<div class="col-6 col-12-medium">
-
 								<!-- Contact Form -->
-									<section>
-										<form id="contact-form" method="POST" action="https://formsubmit.co/el/libato">
-											<input type="hidden" name="_captcha" value="false">
-
-											<!-- New Hidden Field to hold combined message -->
-											<input type="hidden" name="message" id="combined-message" />
-
-											<div class="row gtr-50">
-												<div class="col-6 col-12-small">
-													<input type="text" name="name" placeholder="Name" required>
-												</div>
-												<div class="col-6 col-12-small">
-													<input type="email" name="email" placeholder="Email" required>
-												</div>
-												<div class="col-12">
-													<input type="text" id="piece" placeholder="Piece of Writing" required>
-												</div>
-												<div class="col-12">
-													<textarea id="user-message" placeholder="Message" rows="4" required></textarea>
-												</div>
-												<div class="col-12">
-													<ul class="actions">
-														<li><input type="submit" class="style1" value="Send" /></li>
-														<li><input type="reset" class="style2" value="Reset" /></li>
-													</ul>
-												</div>
+								<section>
+									<form id="contact-form" method="POST" action="https://formsubmit.co/el/libato">
+										<input type="hidden" name="_captcha" value="false">
+										<input type="hidden" name="message" id="combined-message" />
+										<div class="row gtr-50">
+											<div class="col-6 col-12-small">
+												<input type="text" name="name" placeholder="Name" required>
 											</div>
-										</form>
-									</section>
-
-									<script>
-										// Intercept form submit to combine fields
-										document.getElementById("contact-form").addEventListener("submit", function (e) {
-											const piece = document.getElementById("piece").value.trim();
-											const message = document.getElementById("user-message").value.trim();
-											const combined = `Piece of Writing: ${piece}\n\n${message}`;
-											document.getElementById("combined-message").value = combined;
-
-											// Optional: clear out the visible textarea to avoid confusion
-											document.getElementById("user-message").disabled = true;
-										});
-									</script>
-
-
+											<div class="col-6 col-12-small">
+												<input type="email" name="email" placeholder="Email" required>
+											</div>
+											<div class="col-12">
+												<input type="text" id="piece" placeholder="Piece of Writing" required>
+											</div>
+											<div class="col-12">
+												<textarea id="user-message" placeholder="Message" rows="4" required></textarea>
+											</div>
+											<div class="col-12">
+												<ul class="actions">
+													<li><input type="submit" class="style1" value="Send" /></li>
+													<li><input type="reset" class="style2" value="Reset" /></li>
+												</ul>
+											</div>
+										</div>
+									</form>
+								</section>
+								<script>
+									document.getElementById("contact-form").addEventListener("submit", function (e) {
+										const piece = document.getElementById("piece").value.trim();
+										const message = document.getElementById("user-message").value.trim();
+										const combined = `Piece of Writing: ${piece}\n\n${message}`;
+										document.getElementById("combined-message").value = combined;
+										document.getElementById("user-message").disabled = true;
+									});
+								</script>
 							</div>
-							<div class="col-6 col-12-medium">
+						</div>
+					</section>
 
 								<!-- Contact -->
 									<!--<section class="feature-list small">
