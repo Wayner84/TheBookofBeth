@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<!--
+	Escape Velocity by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>University Work - The Book of Beth</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<section id="header" class="wrapper">
+
+					<!-- Logo -->
+						<div id="logo">
+							<h1><a href="index.html">Beth Holder</a></h1>
+							<p>The Book of Beth, my personal blog site</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="index.html">Home</a></li>
+								<li><a href="creative-writing.html">Creative Writing</a></li>
+								<li><a href="poetry.html">Poetry</a></li>
+								<li class="current"><a href="university.html">University</a></li>
+							</ul>
+						</nav>
+
+				</section>
+
+			<!-- Main -->
+				<div id="main" class="wrapper style2">
+					<div class="title">University Work</div>
+					<div class="container">
+
+						<!-- Content -->
+							<div id="content">
+								<header class="style1">
+									<h2>Academic Writing & Essays</h2>
+									<p>My journey through Creative Writing and English Literature studies</p>
+								</header>
+								
+								<div id="writing-list">
+									<!-- University pieces will be dynamically loaded here -->
+								</div>
+								
+								<div id="no-writing" style="text-align: center; padding: 2rem;">
+									<p>No university work has been published yet. Check back soon!</p>
+								</div>
+							</div>
+
+					</div>
+				</div>
+
+			<!-- Footer -->
+				<section id="footer" class="wrapper">
+					<div class="title">Want to comment on my work?</div>
+					<div class="container">
+						<header class="style1">
+							<h2>Any criticism welcome!</h2>
+							<p>
+								If you'd like to comment on my work please click the link below! If you could include the name of the piece you are commenting on in the subject, that'd be amazing!<br />
+							</p>
+						</header>
+						<section style="justify-content: center;">
+						<div style="text-align: center; font-family: 'Source Sans Pro', sans-serif; font-size: 3em; font-style: italic;">
+						  <a href="https://formsubmit.co/el/libato" target="_blank">Send me a message here!</a>
+						</div>
+						</section>
+				</section>
+				<section>
+					<div>
+						<div>
+						<div id="copyright">
+							<ul>
+								<li>&copy; The Book of Beth EST 1999</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+						</div>
+					</div>
+				</section>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			
+			<script>
+				// Function to load and display university pieces
+				async function loadWritingPieces() {
+					const writingList = document.getElementById('writing-list');
+					const noWriting = document.getElementById('no-writing');
+					
+					// List of university files (you'll need to update this manually when adding new pieces)
+					const writingFiles = [
+						// Add your files here following the pattern: 'university/UW-DD.MM.YYYY.html'
+						// Example: 'university/UW-10.08.2025.html'
+					];
+					
+					if (writingFiles.length === 0) {
+						noWriting.style.display = 'block';
+						return;
+					}
+					
+					noWriting.style.display = 'none';
+					
+					// Sort files by date (newest first)
+					writingFiles.sort((a, b) => {
+						const dateA = extractDateFromFilename(a);
+						const dateB = extractDateFromFilename(b);
+						return dateB - dateA;
+					});
+					
+					for (const file of writingFiles) {
+						try {
+							const response = await fetch(file);
+							if (response.ok) {
+								const html = await response.text();
+								const parser = new DOMParser();
+								const doc = parser.parseFromString(html, 'text/html');
+								
+								// Extract title and preview
+								const title = doc.querySelector('h1, h2')?.textContent || 'Untitled';
+								const preview = doc.querySelector('p')?.textContent?.substring(0, 200) + '...' || 'No preview available';
+								const date = formatDateFromFilename(file);
+								
+								// Create article entry
+								const articleHTML = `
+									<article class="box post" style="margin-bottom: 2rem;">
+										<header class="style1">
+											<h3><a href="${file}">${title}</a></h3>
+											<p>Published: ${date}</p>
+										</header>
+										<p>${preview}</p>
+										<ul class="actions">
+											<li><a href="${file}" class="button style1">Read Full Piece</a></li>
+										</ul>
+									</article>
+								`;
+								
+								writingList.innerHTML += articleHTML;
+							}
+						} catch (error) {
+							console.log('Could not load:', file);
+						}
+					}
+				}
+				
+				function extractDateFromFilename(filename) {
+					const match = filename.match(/(\d{2})\.(\d{2})\.(\d{4})/);
+					if (match) {
+						const [, day, month, year] = match;
+						return new Date(year, month - 1, day);
+					}
+					return new Date(0);
+				}
+				
+				function formatDateFromFilename(filename) {
+					const match = filename.match(/(\d{2})\.(\d{2})\.(\d{4})/);
+					if (match) {
+						const [, day, month, year] = match;
+						return `${day}/${month}/${year}`;
+					}
+					return 'Unknown date';
+				}
+				
+				// Load writing pieces when page loads
+				document.addEventListener('DOMContentLoaded', loadWritingPieces);
+			</script>
+
+	</body>
+</html>
