@@ -10,6 +10,74 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<style>
+			.stories-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1.5rem;
+				margin-top: 2rem;
+			}
+			
+			.story-box {
+				background: rgba(255, 255, 255, 0.05);
+				border-radius: 12px;
+				padding: 1.5rem;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				transition: transform 0.2s ease, box-shadow 0.2s ease;
+				height: fit-content;
+			}
+			
+			.story-box:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+			}
+			
+			.story-title {
+				font-weight: bold;
+				font-size: 1.2em;
+				margin-bottom: 0.5rem;
+				color: inherit;
+				text-decoration: none;
+				display: block;
+			}
+			
+			.story-title:hover {
+				color: #4CAF50;
+				text-decoration: none;
+			}
+			
+			.story-date {
+				font-size: 0.85em;
+				opacity: 0.7;
+				margin-bottom: 1rem;
+				font-style: italic;
+			}
+			
+			.story-preview {
+				line-height: 1.6;
+				margin-bottom: 1.5rem;
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				min-height: 4.8em; /* Ensures consistent height for 3 lines */
+			}
+			
+			@media (max-width: 1024px) {
+				.stories-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+			
+			@media (max-width: 768px) {
+				.stories-grid {
+					grid-template-columns: 1fr;
+					gap: 1rem;
+				}
+			}
+		</style>
 	</head>
 	<body class="no-sidebar is-preload">
 		<div id="page-wrapper">
@@ -47,7 +115,7 @@
 									<p>Stories, fragments, and worlds waiting to be explored</p>
 								</header>
 								
-								<div id="writing-list">
+								<div id="writing-list" class="stories-grid">
 									<!-- Writing pieces will be dynamically loaded here -->
 								</div>
 								
@@ -108,6 +176,7 @@
 						// Add your files here following the pattern: 'creative-writing/CW-DD.MM.YYYY.html'
 						// Example: 'creative-writing/CW-10.08.2025.html'
 						'creative-writing/CW-13.11.2018.html'
+						'creative-writing/CW-16.11.2018.html'
 						
 					];
 					
@@ -133,23 +202,46 @@
 								const parser = new DOMParser();
 								const doc = parser.parseFromString(html, 'text/html');
 								
-								// Extract title and preview
-								const title = doc.querySelector('h1, h2')?.textContent || 'Untitled';
-								const preview = doc.querySelector('p')?.textContent?.substring(0, 200) + '...' || 'No preview available';
+								// Extract title from the main content area, not the header
+								const contentTitle = doc.querySelector('#content h1, #main h1, article h1')?.textContent || 
+								                     doc.querySelector('#content h2, #main h2, article h2')?.textContent || 
+								                     'Untitled';
+								const title = contentTitle;
+								
+								// Get all paragraphs and find the first one with actual story content
+								const paragraphs = doc.querySelectorAll('p');
+								let storyContent = '';
+								
+								for (let p of paragraphs) {
+									const text = p.textContent?.trim();
+									// Skip the publication date and other metadata
+									if (text && !text.includes('Published:') && !text.includes('The Book of Beth')) {
+										storyContent = text;
+										break;
+									}
+								}
+								
+								// Create preview from story content (about 120 characters for 2-3 lines)
+								const preview = storyContent.length > 120 ? storyContent.substring(0, 120) + '...' : storyContent || 'No preview available';
+								
 								const date = formatDateFromFilename(file);
 								
-								// Create article entry
+								// Create article entry with new styling
 								const articleHTML = `
-									<article class="box post" style="margin-bottom: 2rem;">
-										<header class="style1">
-											<h3><a href="${file}">${title}</a></h3>
-											<p>Published: ${date}</p>
-										</header>
-										<p>${preview}</p>
+									<div class="story-box">
+										<div class="story-title">
+											<a href="${file}">${title}</a>
+										</div>
+										<div class="story-date">
+											Published: ${date}
+										</div>
+										<div class="story-preview">
+											${preview}
+										</div>
 										<ul class="actions">
 											<li><a href="${file}" class="button style1">Read Full Piece</a></li>
 										</ul>
-									</article>
+									</div>
 								`;
 								
 								writingList.innerHTML += articleHTML;
