@@ -1,184 +1,251 @@
 <!DOCTYPE HTML>
 <!--
-	Escape Velocity by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+        Escape Velocity by HTML5 UP
+        html5up.net | @ajlkn
+        Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>Poetry - The Book of Beth</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
-	<body class="no-sidebar is-preload">
-		<div id="page-wrapper">
+        <head>
+                <title>Poetry - The Book of Beth</title>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+                <link rel="stylesheet" href="assets/css/main.css" />
+                <style>
+                        .poetry-grid {
+                                display: grid;
+                                grid-template-columns: repeat(3, 1fr);
+                                gap: 1.5rem;
+                                margin-top: 2rem;
+                        }
 
-			<!-- Header -->
-				<section id="header" class="wrapper">
+                        .poem-box {
+                                background: rgba(255, 255, 255, 0.05);
+                                border-radius: 12px;
+                                padding: 1.5rem;
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                                height: fit-content;
+                        }
 
-					<!-- Logo -->
-						<div id="logo">
-							<h1><a href="index.html">Beth Holder</a></h1>
-							<p>The Book of Beth, my personal blog site</p>
-						</div>
+                        .poem-box:hover {
+                                transform: translateY(-2px);
+                                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+                        }
 
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li><a href="index.html">Home</a></li>
-								<li><a href="creative-writing.html">Creative Writing</a></li>
-								<li class="current"><a href="poetry.html">Poetry</a></li>
-								<li><a href="university.html">University</a></li>
-							</ul>
-						</nav>
+                        .poem-title {
+                                font-weight: bold;
+                                font-size: 1.2em;
+                                margin-bottom: 0.5rem;
+                                color: inherit;
+                                text-decoration: none;
+                                display: block;
+                        }
 
-				</section>
+                        .poem-title:hover {
+                                color: #4CAF50;
+                                text-decoration: none;
+                        }
 
-			<!-- Main -->
-				<div id="main" class="wrapper style2">
-					<div class="title">Poetry</div>
-					<div class="container">
+                        .poem-date {
+                                font-size: 0.85em;
+                                opacity: 0.7;
+                                margin-bottom: 1rem;
+                                font-style: italic;
+                        }
 
-						<!-- Content -->
-							<div id="content">
-								<header class="style1">
-									<h2>My Poetry Collection</h2>
-									<p>Verses from the heart, moments captured in words</p>
-								</header>
-								
-								<div id="writing-list">
-									<!-- Poetry pieces will be dynamically loaded here -->
-								</div>
-								
-								<div id="no-writing" style="text-align: center; padding: 2rem;">
-									<p>No poetry pieces have been published yet. Check back soon!</p>
-								</div>
-							</div>
+                        .poem-preview {
+                                line-height: 1.6;
+                                margin-bottom: 1.5rem;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 4;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                min-height: 6.4em;
+                        }
 
-					</div>
-				</div>
+                        @media (max-width: 1024px) {
+                                .poetry-grid {
+                                        grid-template-columns: repeat(2, 1fr);
+                                }
+                        }
 
-			<!-- Footer -->
-				<section id="footer" class="wrapper">
-					<div class="title">Want to comment on my work?</div>
-					<div class="container">
-						<header class="style1">
-							<h2>Any criticism welcome!</h2>
-							<p>
-								If you'd like to comment on my work please click the link below! If you could include the name of the piece you are commenting on in the subject, that'd be amazing!<br />
-							</p>
-						</header>
-						<section style="justify-content: center;">
-						<div style="text-align: center; font-family: 'Source Sans Pro', sans-serif; font-size: 3em; font-style: italic;">
-						  <a href="https://formsubmit.co/el/libato" target="_blank">Send me a message here!</a>
-						</div>
-						</section>
-				</section>
-				<section>
-					<div>
-						<div>
-						<div id="copyright">
-							<ul>
-								<li>&copy; The Book of Beth EST 1999</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-						</div>
-					</div>
-				</section>
+                        @media (max-width: 768px) {
+                                .poetry-grid {
+                                        grid-template-columns: 1fr;
+                                        gap: 1rem;
+                                }
+                        }
+                </style>
+        </head>
+        <body class="no-sidebar is-preload">
+                <div id="page-wrapper">
 
-		</div>
+                        <!-- Header -->
+                                <section id="header" class="wrapper">
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			
-			<script>
-				// Function to load and display poetry pieces
-				async function loadWritingPieces() {
-					const writingList = document.getElementById('writing-list');
-					const noWriting = document.getElementById('no-writing');
-					
-					// List of poetry files (you'll need to update this manually when adding new pieces)
-					const writingFiles = [
-						// Add your files here following the pattern: 'poetry/P-DD.MM.YYYY.html'
-						// Example: 'poetry/P-10.08.2025.html'
-					];
-					
-					if (writingFiles.length === 0) {
-						noWriting.style.display = 'block';
-						return;
-					}
-					
-					noWriting.style.display = 'none';
-					
-					// Sort files by date (newest first)
-					writingFiles.sort((a, b) => {
-						const dateA = extractDateFromFilename(a);
-						const dateB = extractDateFromFilename(b);
-						return dateB - dateA;
-					});
-					
-					for (const file of writingFiles) {
-						try {
-							const response = await fetch(file);
-							if (response.ok) {
-								const html = await response.text();
-								const parser = new DOMParser();
-								const doc = parser.parseFromString(html, 'text/html');
-								
-								// Extract title and preview
-								const title = doc.querySelector('h1, h2')?.textContent || 'Untitled';
-								const preview = doc.querySelector('p')?.textContent?.substring(0, 200) + '...' || 'No preview available';
-								const date = formatDateFromFilename(file);
-								
-								// Create article entry
-								const articleHTML = `
-									<article class="box post" style="margin-bottom: 2rem;">
-										<header class="style1">
-											<h3><a href="${file}">${title}</a></h3>
-											<p>Published: ${date}</p>
-										</header>
-										<p>${preview}</p>
-										<ul class="actions">
-											<li><a href="${file}" class="button style1">Read Full Piece</a></li>
-										</ul>
-									</article>
-								`;
-								
-								writingList.innerHTML += articleHTML;
-							}
-						} catch (error) {
-							console.log('Could not load:', file);
-						}
-					}
-				}
-				
-				function extractDateFromFilename(filename) {
-					const match = filename.match(/(\d{2})\.(\d{2})\.(\d{4})/);
-					if (match) {
-						const [, day, month, year] = match;
-						return new Date(year, month - 1, day);
-					}
-					return new Date(0);
-				}
-				
-				function formatDateFromFilename(filename) {
-					const match = filename.match(/(\d{2})\.(\d{2})\.(\d{4})/);
-					if (match) {
-						const [, day, month, year] = match;
-						return `${day}/${month}/${year}`;
-					}
-					return 'Unknown date';
-				}
-				
-				// Load writing pieces when page loads
-				document.addEventListener('DOMContentLoaded', loadWritingPieces);
-			</script>
+                                        <!-- Logo -->
+                                                <div id="logo">
+                                                        <h1><a href="index.html">Beth Holder</a></h1>
+                                                        <p>The Book of Beth, my personal blog site</p>
+                                                </div>
 
-	</body>
+                                        <!-- Nav -->
+                                                <nav id="nav">
+                                                        <ul>
+                                                                <li><a href="index.html">Home</a></li>
+                                                                <li><a href="creative-writing.html">Creative Writing</a></li>
+                                                                <li class="current"><a href="poetry.html">Poetry</a></li>
+                                                                <li><a href="university.html">University</a></li>
+                                                        </ul>
+                                                </nav>
+
+                                </section>
+
+                        <!-- Main -->
+                                <div id="main" class="wrapper style2">
+                                        <div class="title">Poetry</div>
+                                        <div class="container">
+
+                                                <!-- Content -->
+                                                        <div id="content">
+                                                                <header class="style1">
+                                                                        <h2>My Poetry Collection</h2>
+                                                                        <p>Verses from the heart, moments captured in words</p>
+                                                                </header>
+
+                                                                <div id="writing-list" class="poetry-grid">
+                                                                        <!-- Poetry pieces will be dynamically loaded here -->
+                                                                </div>
+
+                                                                <div id="no-writing" style="text-align: center; padding: 2rem;">
+                                                                        <p>No poetry pieces have been published yet. Check back soon!</p>
+                                                                </div>
+                                                        </div>
+
+                                        </div>
+                                </div>
+
+                        <!-- Footer -->
+                                <section id="footer" class="wrapper">
+                                        <div class="title">Want to comment on my work?</div>
+                                        <div class="container">
+                                                <header class="style1">
+                                                        <h2>Any criticism welcome!</h2>
+                                                        <p>
+                                                                If you'd like to comment on my work please click the link below! If you could include the name of the piece you are commenting on in the subject, that'd be amazing!<br />
+                                                        </p>
+                                                </header>
+                                                <section style="justify-content: center;">
+                                                <div style="text-align: center; font-family: 'Source Sans Pro', sans-serif; font-size: 3em; font-style: italic;">
+                                                  <a href="https://formsubmit.co/el/libato" target="_blank">Send me a message here!</a>
+                                                </div>
+                                                </section>
+                                </section>
+                                <section>
+                                        <div>
+                                                <div>
+                                                <div id="copyright">
+                                                        <ul>
+                                                                <li>&copy; The Book of Beth EST 1999</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                                                        </ul>
+                                                </div>
+                                                </div>
+                                        </div>
+                                </section>
+
+                </div>
+
+                <!-- Scripts -->
+                        <script src="assets/js/jquery.min.js"></script>
+                        <script src="assets/js/jquery.dropotron.min.js"></script>
+                        <script src="assets/js/browser.min.js"></script>
+                        <script src="assets/js/breakpoints.min.js"></script>
+                        <script src="assets/js/util.js"></script>
+                        <script src="assets/js/main.js"></script>
+
+                        <script>
+                                // Function to load and display poetry pieces
+                                async function loadWritingPieces() {
+                                        const writingList = document.getElementById('writing-list');
+                                        const noWriting = document.getElementById('no-writing');
+
+                                        const writingFiles = [
+                                                'poetry/P-20.08.2025.html',
+                                                'poetry/P-11.09.2025.html',
+                                                'poetry/P-27.07.2025.html',
+                                                'poetry/P-23.07.2025.html',
+                                                'poetry/P-16.07.2025.html',
+                                                'poetry/P-14.07.2025.html',
+                                                'poetry/P-02.07.2025.html'
+                                        ];
+
+                                        if (writingFiles.length === 0) {
+                                                noWriting.style.display = 'block';
+                                                return;
+                                        }
+
+                                        noWriting.style.display = 'none';
+
+                                        writingFiles.sort((a, b) => {
+                                                const dateA = extractDateFromFilename(a);
+                                                const dateB = extractDateFromFilename(b);
+                                                return dateB - dateA;
+                                        });
+
+                                        for (const file of writingFiles) {
+                                                try {
+                                                        const response = await fetch(file);
+                                                        if (response.ok) {
+                                                                const html = await response.text();
+                                                                const parser = new DOMParser();
+                                                                const doc = parser.parseFromString(html, 'text/html');
+
+                                                                const title = doc.querySelector('h1, h2')?.textContent || 'Untitled';
+                                                                const previewParagraph = doc.querySelector('p');
+                                                                const previewText = previewParagraph ? previewParagraph.textContent.trim().replace(/\s+/g, ' ') : '';
+                                                                const preview = previewText ? (previewText.length > 220 ? previewText.substring(0, 220) + '…' : previewText) : 'No preview available';
+                                                                const date = formatDateFromFilename(file);
+
+                                                                const article = document.createElement('article');
+                                                                article.className = 'poem-box';
+                                                                article.innerHTML = `
+                                                                        <a class="poem-title" href="${file}">${title}</a>
+                                                                        <p class="poem-date">Published: ${date}</p>
+                                                                        <p class="poem-preview">${preview}</p>
+                                                                        <ul class="actions">
+                                                                                <li><a href="${file}" class="button style1">Read Full Piece</a></li>
+                                                                        </ul>
+                                                                `;
+                                                                writingList.appendChild(article);
+                                                        }
+                                                } catch (error) {
+                                                        console.log('Could not load:', file);
+                                                }
+                                        }
+                                }
+
+                                function extractDateFromFilename(filename) {
+                                        const match = filename.match(/(\d{2})\.(\d{2})\.(\d{4})/);
+                                        if (match) {
+                                                const [, day, month, year] = match;
+                                                return new Date(year, month - 1, day);
+                                        }
+                                        return new Date(0);
+                                }
+
+                                function formatDateFromFilename(filename) {
+                                        const match = filename.match(/(\d{2})\.(\d{2})\.(\d{4})/);
+                                        if (match) {
+                                                const [, day, month, year] = match;
+                                                return `${day}/${month}/${year}`;
+                                        }
+                                        return 'Unknown date';
+                                }
+
+                                document.addEventListener('DOMContentLoaded', loadWritingPieces);
+                        </script>
+
+        </body>
 </html>
