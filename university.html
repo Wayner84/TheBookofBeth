@@ -5,12 +5,80 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>University Work - The Book of Beth</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-	</head>
+        <head>
+                <title>University Work - The Book of Beth</title>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+                <link rel="stylesheet" href="assets/css/main.css" />
+                <style>
+                        .stories-grid {
+                                display: grid;
+                                grid-template-columns: repeat(3, 1fr);
+                                gap: 1.5rem;
+                                margin-top: 2rem;
+                        }
+
+                        .story-box {
+                                background: rgba(255, 255, 255, 0.05);
+                                border-radius: 12px;
+                                padding: 1.5rem;
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                                height: fit-content;
+                        }
+
+                        .story-box:hover {
+                                transform: translateY(-2px);
+                                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+                        }
+
+                        .story-title {
+                                font-weight: bold;
+                                font-size: 1.2em;
+                                margin-bottom: 0.5rem;
+                                color: inherit;
+                                text-decoration: none;
+                                display: block;
+                        }
+
+                        .story-title:hover {
+                                color: #4CAF50;
+                                text-decoration: none;
+                        }
+
+                        .story-date {
+                                font-size: 0.85em;
+                                opacity: 0.7;
+                                margin-bottom: 1rem;
+                                font-style: italic;
+                        }
+
+                        .story-preview {
+                                line-height: 1.6;
+                                margin-bottom: 1.5rem;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 3;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                min-height: 4.8em;
+                        }
+
+                        @media (max-width: 1024px) {
+                                .stories-grid {
+                                        grid-template-columns: repeat(2, 1fr);
+                                }
+                        }
+
+                        @media (max-width: 768px) {
+                                .stories-grid {
+                                        grid-template-columns: 1fr;
+                                        gap: 1rem;
+                                }
+                        }
+                </style>
+        </head>
 	<body class="no-sidebar is-preload">
 		<div id="page-wrapper">
 
@@ -47,9 +115,9 @@
 									<p>My journey through Creative Writing and English Literature studies</p>
 								</header>
 								
-								<div id="writing-list">
-									<!-- University pieces will be dynamically loaded here -->
-								</div>
+                                                                <div id="writing-list" class="stories-grid">
+                                                                        <!-- University pieces will be dynamically loaded here -->
+                                                                </div>
 								
 								<div id="no-writing" style="text-align: center; padding: 2rem;">
 									<p>No university work has been published yet. Check back soon!</p>
@@ -99,86 +167,55 @@
 			
 			<script>
 				// Function to load and display university pieces
-				async function loadWritingPieces() {
-					const writingList = document.getElementById('writing-list');
-					const noWriting = document.getElementById('no-writing');
-					
-					// List of university files (you'll need to update this manually when adding new pieces)
-					const writingFiles = [
-						// Add your files here following the pattern: 'university/UW-DD.MM.YYYY.html'
-						// Example: 'university/UW-10.08.2025.html'
-					];
-					
-					if (writingFiles.length === 0) {
-						noWriting.style.display = 'block';
-						return;
-					}
-					
-					noWriting.style.display = 'none';
-					
-					// Sort files by date (newest first)
-					writingFiles.sort((a, b) => {
-						const dateA = extractDateFromFilename(a);
-						const dateB = extractDateFromFilename(b);
-						return dateB - dateA;
-					});
-					
-					for (const file of writingFiles) {
-						try {
-							const response = await fetch(file);
-							if (response.ok) {
-								const html = await response.text();
-								const parser = new DOMParser();
-								const doc = parser.parseFromString(html, 'text/html');
-								
-								// Extract title and preview
-								const title = doc.querySelector('h1, h2')?.textContent || 'Untitled';
-								const preview = doc.querySelector('p')?.textContent?.substring(0, 200) + '...' || 'No preview available';
-								const date = formatDateFromFilename(file);
-								
-								// Create article entry
-								const articleHTML = `
-									<article class="box post" style="margin-bottom: 2rem;">
-										<header class="style1">
-											<h3><a href="${file}">${title}</a></h3>
-											<p>Published: ${date}</p>
-										</header>
-										<p>${preview}</p>
-										<ul class="actions">
-											<li><a href="${file}" class="button style1">Read Full Piece</a></li>
-										</ul>
-									</article>
-								`;
-								
-								writingList.innerHTML += articleHTML;
-							}
-						} catch (error) {
-							console.log('Could not load:', file);
-						}
-					}
-				}
-				
-				function extractDateFromFilename(filename) {
-					const match = filename.match(/(\d{2})\.(\d{2})\.(\d{4})/);
-					if (match) {
-						const [, day, month, year] = match;
-						return new Date(year, month - 1, day);
-					}
-					return new Date(0);
-				}
-				
-				function formatDateFromFilename(filename) {
-					const match = filename.match(/(\d{2})\.(\d{2})\.(\d{4})/);
-					if (match) {
-						const [, day, month, year] = match;
-						return `${day}/${month}/${year}`;
-					}
-					return 'Unknown date';
-				}
-				
-				// Load writing pieces when page loads
-				document.addEventListener('DOMContentLoaded', loadWritingPieces);
-			</script>
+                                async function loadWritingPieces() {
+                                        const writingList = document.getElementById('writing-list');
+                                        const noWriting = document.getElementById('no-writing');
+
+                                        const universityItems = [
+                                                {
+                                                        title: 'First Open Mic Night - Statistically Speaking',
+                                                        date: '2025-09-01',
+                                                        displayDate: '01/09/2025',
+                                                        preview: 'Relive the first university open mic night and watch Beth perform "Statistically Speaking" live on stage.',
+                                                        link: 'university/open-mic-night.html',
+                                                        cta: 'Watch Video'
+                                                }
+                                        ];
+
+                                        if (universityItems.length === 0) {
+                                                noWriting.style.display = 'block';
+                                                return;
+                                        }
+
+                                        noWriting.style.display = 'none';
+
+                                        universityItems
+                                                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                                                .forEach((item) => {
+                                                        const articleHTML = `
+                                                                <div class="story-box">
+                                                                        <div class="story-title">
+                                                                                <a href="${item.link}">${item.title}</a>
+                                                                        </div>
+                                                                        <div class="story-date">
+                                                                                Published: ${item.displayDate}
+                                                                        </div>
+                                                                        <div class="story-preview">
+                                                                                ${item.preview}
+                                                                        </div>
+                                                                        <ul class="actions">
+                                                                                <li><a href="${item.link}" class="button style1">${item.cta}</a></li>
+                                                                        </ul>
+                                                                </div>
+                                                        `;
+
+                                                        writingList.innerHTML += articleHTML;
+                                                });
+                                }
+
+                                // Load writing pieces when page loads
+                                document.addEventListener('DOMContentLoaded', loadWritingPieces);
+                        </script>
 
 	</body>
 </html>
