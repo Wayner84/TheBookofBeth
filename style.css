@@ -96,6 +96,23 @@ main {
   margin: 0 auto;
 }
 
+#footer,
+#footer + section {
+  background: var(--primary-green);
+  color: #fff;
+  padding: 2rem 0;
+}
+
+#footer a,
+#footer + section a {
+  color: var(--primary-green-soft);
+}
+
+#footer a:hover,
+#footer + section a:hover {
+  color: #fff;
+}
+
 .banner img {
   width: 100%;
   height: auto;
