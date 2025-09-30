@@ -116,6 +116,7 @@
 								</header>
 								
                                                                 <div id="writing-list" class="stories-grid">
+
                                                                         <article class="story-box">
                                                                                 <a class="story-title" href="university/open-mic-night.html">First Open Mic Night - Statistically Speaking</a>
                                                                                 <p class="story-date">Published: 01/09/2025</p>
@@ -125,6 +126,7 @@
                                                                                 </ul>
                                                                         </article>
                                                                 </div>
+
 							</div>
 
 					</div>
@@ -169,4 +171,59 @@
 			<script src="assets/js/main.js"></script>
 			
         </body>
+
+			<script>
+				// Function to load and display university pieces
+                                async function loadWritingPieces() {
+                                        const writingList = document.getElementById('writing-list');
+                                        const noWriting = document.getElementById('no-writing');
+
+                                        const universityItems = [
+                                                {
+                                                        title: 'First Open Mic Night - Statistically Speaking',
+                                                        date: '2025-09-01',
+                                                        displayDate: '01/09/2025',
+                                                        preview: 'Relive the first university open mic night and watch Beth perform "Statistically Speaking" live on stage.',
+                                                        link: 'university/open-mic-night.html',
+                                                        cta: 'Watch Video'
+                                                }
+                                        ];
+
+                                        if (universityItems.length === 0) {
+                                                noWriting.style.display = 'block';
+                                                return;
+                                        }
+
+                                        noWriting.style.display = 'none';
+
+                                        universityItems
+                                                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                                                .forEach((item) => {
+                                                        const articleHTML = `
+                                                                <div class="story-box">
+                                                                        <div class="story-title">
+                                                                                <a href="${item.link}">${item.title}</a>
+                                                                        </div>
+                                                                        <div class="story-date">
+                                                                                Published: ${item.displayDate}
+                                                                        </div>
+                                                                        <div class="story-preview">
+                                                                                ${item.preview}
+                                                                        </div>
+                                                                        <ul class="actions">
+                                                                                <li><a href="${item.link}" class="button style1">${item.cta}</a></li>
+                                                                        </ul>
+                                                                </div>
+                                                        `;
+
+                                                        writingList.innerHTML += articleHTML;
+                                                });
+                                }
+
+                                // Load writing pieces when page loads
+                                document.addEventListener('DOMContentLoaded', loadWritingPieces);
+                        </script>
+
+	</body>
+
 </html>
