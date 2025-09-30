@@ -202,10 +202,30 @@
                                                                 const parser = new DOMParser();
                                                                 const doc = parser.parseFromString(html, 'text/html');
 
-                                                                const title = doc.querySelector('h1, h2')?.textContent || 'Untitled';
-                                                                const previewParagraph = doc.querySelector('p');
-                                                                const previewText = previewParagraph ? previewParagraph.textContent.trim().replace(/\s+/g, ' ') : '';
-                                                                const preview = previewText ? (previewText.length > 220 ? previewText.substring(0, 220) + '…' : previewText) : 'No preview available';
+                                                                const articleNode = doc.querySelector('article.box.post') || doc.querySelector('#content article') || doc.querySelector('article');
+                                                                const headingNode = articleNode?.querySelector('header h1, header h2, h1, h2') || doc.querySelector('#content h1, #content h2, main h1, main h2') || doc.querySelector('h1, h2');
+                                                                const title = headingNode?.textContent?.trim() || 'Untitled';
+
+                                                                const paragraphs = Array.from(doc.querySelectorAll('p'));
+                                                                let previewSource = '';
+
+                                                                for (const paragraph of paragraphs) {
+                                                                        const text = paragraph.textContent.trim().replace(/\s+/g, ' ');
+                                                                        if (!text) {
+                                                                                continue;
+                                                                        }
+                                                                        if (/^Published:/i.test(text)) {
+                                                                                continue;
+                                                                        }
+                                                                        if (text.includes('The Book of Beth')) {
+                                                                                continue;
+                                                                        }
+
+                                                                        previewSource = text;
+                                                                        break;
+                                                                }
+
+                                                                const preview = previewSource ? (previewSource.length > 220 ? previewSource.substring(0, 220) + '…' : previewSource) : 'No preview available';
                                                                 const date = formatDateFromFilename(file);
 
                                                                 const article = document.createElement('article');
