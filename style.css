@@ -1,9 +1,28 @@
 
+:root {
+  --primary-green: #2f6b3d;
+  --primary-green-hover: #3f8f54;
+  --primary-green-active: #245937;
+  --primary-green-soft: #e3f1e5;
+  --primary-green-muted: #c9dfcc;
+  --primary-green-dark: #1f3a25;
+  --primary-text: #1f2d21;
+}
+
 body {
   margin: 0;
   font-family: 'Crimson Text', serif;
-  background: #e8f5e8;
-  color: #2e3e2e;
+  background: var(--primary-green-soft);
+  color: var(--primary-text);
+}
+
+a {
+  color: var(--primary-green-dark);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-green-hover);
 }
 
 header {
@@ -38,7 +57,7 @@ header {
   left: -250px;
   width: 250px;
   height: 100%;
-  background: #e8f5e9;
+  background: var(--primary-green);
   padding: 1rem;
   box-shadow: 2px 0 5px rgba(0,0,0,0.1);
   transition: left 0.3s ease;
@@ -62,6 +81,15 @@ header {
   margin-bottom: 0.5rem;
 }
 
+#side-menu,
+#side-menu a {
+  color: #fff;
+}
+
+#side-menu a:hover {
+  color: var(--primary-green-soft);
+}
+
 main {
   padding: 5rem 2rem 2rem 2rem;
   max-width: 700px;
@@ -73,7 +101,7 @@ main {
   height: auto;
   max-height: 250px;
   object-fit: cover;
-  border-bottom: 4px solid #c3e6cb;
+  border-bottom: 4px solid var(--primary-green-muted);
 }
 
 .intro h1 {
@@ -88,7 +116,7 @@ main {
 
 .readings h2 {
   margin-top: 2rem;
-  border-bottom: 2px solid #a5d6a7;
+  border-bottom: 2px solid var(--primary-green);
   padding-bottom: 0.3rem;
 }
 
