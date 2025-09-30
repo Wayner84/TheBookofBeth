@@ -227,23 +227,6 @@
 
                                                                 const preview = previewSource ? (previewSource.length > 220 ? previewSource.substring(0, 220) + '…' : previewSource) : 'No preview available';
 
-                                                                for (const paragraph of paragraphs) {
-                                                                        const text = paragraph.textContent.trim().replace(/\s+/g, ' ');
-                                                                        if (!text) {
-                                                                                continue;
-                                                                        }
-                                                                        if (/^Published:/i.test(text)) {
-                                                                                continue;
-                                                                        }
-                                                                        if (text.includes('The Book of Beth')) {
-                                                                                continue;
-                                                                        }
-
-                                                                        previewSource = text;
-                                                                        break;
-                                                                }
-
-                                                                const preview = previewSource ? (previewSource.length > 220 ? previewSource.substring(0, 220) + '…' : previewSource) : 'No preview available';
                                                                 const date = formatDateFromFilename(file);
 
                                                                 const article = document.createElement('article');
